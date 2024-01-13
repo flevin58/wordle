@@ -1,0 +1,39 @@
+name: "Wordle"
+version: "1.2"
+screen:
+  width: 435
+  height: 600
+
+messages:
+  playing:
+    title: "Keep typing!"
+    text: "Press a key (A-Z) or Backspace"
+  enter:
+    title: "Hope you guessed right!"
+    text: "Press Enter or Backspace"
+  win:
+    title: "You are a winner !!!"
+    text: "Enter (play again), Esc (exit)"
+  loose:
+    title: "OOOOH ... You loose :("
+    text: "Enter (play again), Esc (exit)"
+
+colors:
+  lightgrey: "#c2c5c6ff"
+  grey:      "#777c7eff"
+  yellow:    "#cdb35dff"
+  green:     "#60a665ff"
+  outline:   "#e81212ff"
+  blue:      "#6495edff"
+  white:     "#ffffffff"
+
+font:
+  letter:
+    face: Bold
+    size: 50.0
+  title:
+    face: Medium
+    size: 30.0
+  message:
+    face: Thin
+    size: 24.0
