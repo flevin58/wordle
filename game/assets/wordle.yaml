@@ -1,9 +1,21 @@
+###############################################################################
+# This is the configuration file of the wordle game by flevin58
+# It is intended to be used at design time, and is embedded in the code
+# 
+# Warning: adding values implies modification of the Config struct in config.go
+###############################################################################
 name: "Wordle"
 version: "1.2"
-screen:
-  width: 435
-  height: 600
 
+# if you modify the geometry the screen size will be recalculated in the func init()
+# I haven't tested it, so don't mess too much with it
+geometry:
+  titleh: 40
+  boxsz: 75
+  boxsp: 8
+  statush: 80
+
+# if you modify a message, check that it fits in the window
 messages:
   playing:
     title: "Keep typing!"
@@ -18,16 +30,26 @@ messages:
     title: "OOOOH ... You loose :("
     text: "Enter (play again), Esc (exit)"
 
+# colors are in the hexadecimal form "#rrggbb" (red, green, blue)
+# the first three represent the background of the screen areas
+# the rest are the fill colors of the boxes and cursor outline
 colors:
-  lightgrey: "#c2c5c6ff"
-  grey:      "#777c7eff"
-  yellow:    "#cdb35dff"
-  green:     "#60a665ff"
-  outline:   "#e81212ff"
-  blue:      "#6495edff"
-  white:     "#ffffffff"
+  titlearea:  "#60a665"  # green
+  gridarea:   "#ffffff"  # white
+  statusarea: "#00acd7"  # cyan
+  outline:    "#e81212"  # red
+  emptybox:   "#c2c5c6"  # light grey
+  noletters:  "#777c7e"  # grey
+  wrongpos:   "#cdb35d"  # yellow
+  rightpos:   "#60a665"  # green
+  answer:     "#6495ed"  # blue
 
+# currently font colors are black for the titles, messages and typed letters
+# it is white for lines with colored boxes
 font:
+  wordle:
+    face: Medium
+    size: 24.0
   letter:
     face: Bold
     size: 50.0
