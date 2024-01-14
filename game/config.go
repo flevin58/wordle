@@ -2,7 +2,6 @@ package game
 
 import (
 	"embed"
-	_ "embed"
 	"fmt"
 	"image/color"
 	"log"
@@ -25,8 +24,8 @@ type Color string
 // if aa (alpha channel) is not present, we assume 0xff
 func (c Color) toRGBA() color.RGBA {
 	s := string(c)
-	if s[0] != '#' || len(s) < 7 || len(s) > 9 {
-		log.Fatalf("ill formatted color string: %s", s)
+	if s[0] != '#' && len(s) != 7 && len(s) != 9 {
+		log.Fatalf("bad formatted color string: %s", s)
 	}
 	if len(s) == 7 {
 		s += "ff"
@@ -36,7 +35,7 @@ func (c Color) toRGBA() color.RGBA {
 	b, err3 := strconv.ParseUint(s[5:7], 16, 8)
 	a, err4 := strconv.ParseUint(s[7:9], 16, 8)
 	if err1 != nil || err2 != nil || err3 != nil || err4 != nil {
-		log.Fatalln("error in configuration file")
+		log.Fatalln("error parsing hex colors in configuration file")
 	}
 	return color.RGBA{
 		R: uint8(r),
@@ -137,6 +136,4 @@ func init() {
 	// Calculate geometry
 	wconf.Screen.Width = nCols*wconf.Geometry.Boxsz + (nCols+1)*wconf.Geometry.Boxsp
 	wconf.Screen.Height = wconf.Geometry.Titleh + nRows*wconf.Geometry.Boxsz + (nRows+1)*wconf.Geometry.Boxsp + wconf.Geometry.Statush
-	log.Println(wconf)
-	log.Printf("screenWidth:%d, screenHeight:%d\n", wconf.Screen.Width, wconf.Screen.Height)
 }
