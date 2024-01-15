@@ -3,6 +3,8 @@
 # It is intended to be used at design time, and is embedded in the code
 # 
 # Warning: adding values implies modification of the Config struct in config.go
+#
+# You can validate YAML online at: https://onlineyamltools.com/validate-yaml
 ###############################################################################
 name: "Wordle"
 version: "1.2"

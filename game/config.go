@@ -1,16 +1,20 @@
 package game
 
 import (
+	"bytes"
 	"embed"
 	"fmt"
 	"image/color"
 	"log"
 	"strconv"
 
+	"github.com/spf13/viper"
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/opentype"
-	"gopkg.in/yaml.v3"
 )
+
+//go:embed assets
+var assetsDir embed.FS
 
 const (
 	nRows = 6
@@ -97,15 +101,9 @@ type Config struct {
 
 var wconf Config
 
-//go:embed assets/wordle.yaml
-var yfile []byte
-
-//go:embed assets/fonts
-var fontDir embed.FS
-
 func getFontFace(theFont FontFace) font.Face {
 	fontName := fmt.Sprintf("assets/fonts/UbuntuSansMono-%s.otf", theFont.Face)
-	fontData, err := fontDir.ReadFile(fontName)
+	fontData, err := assetsDir.ReadFile(fontName)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -128,10 +126,16 @@ func getFontFace(theFont FontFace) font.Face {
 
 func init() {
 	// Read configuration file
-	err := yaml.Unmarshal(yfile, &wconf)
+	viper.SetConfigType("yaml")
+	yamlFile, err := assetsDir.ReadFile("assets/wordle.yaml")
 	if err != nil {
-		log.Fatalf("couldn't unmarshal the configuration file: %v", err)
+		log.Fatalf("couldn't load the embedded configuration file: %v", err)
 	}
+	err = viper.ReadConfig(bytes.NewReader(yamlFile))
+	if err != nil {
+		log.Fatalf("couldn't read the configuration file: %v", err)
+	}
+	viper.Unmarshal(&wconf)
 
 	// Calculate geometry
 	wconf.Screen.Width = nCols*wconf.Geometry.Boxsz + (nCols+1)*wconf.Geometry.Boxsp
