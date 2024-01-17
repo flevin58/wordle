@@ -6,7 +6,7 @@ me to learn ***ebitengine***
 
 ## Installation
 
-Doenload the projext files to your computer and within the wordle folder type:
+Download the project files to your computer and within the wordle folder type:
 
 ```
 go install
@@ -19,7 +19,8 @@ Note: check to have set $GOPATH and to have $GOPATH/bin in your PATH environment
 The words used by this game are embedded and they were scraped from the following site:
 https://www.wordunscrambler.net/word-list/wordle-word-list
 
-If interested, you can find the source code of the scraping project at the following github repository: flevin58/wordle-scrape
+If interested, you can find the source code of the scraping project at the following github repository:
+https://github.com/flevin58/wordle-scrape
 
 
 ## Project Tree Structure
