@@ -18,6 +18,7 @@ If interested, you can find the source code of the scraping project at the follo
 
 ## Project Tree Structure
 
+```
 .
 ├── LICENSE
 ├── README.md
@@ -33,3 +34,4 @@ If interested, you can find the source code of the scraping project at the follo
 ├── go.mod
 ├── go.sum
 └── main.go
+```
