@@ -1,0 +1,38 @@
+GNU Make 4.4.1
+Built for Windows32
+Copyright (C) 1988-2023 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+find_and_set_shell() path search set default_shell = C:/Users/flevin58/scoop/shims/sh.exe
+Reading makefiles...
+Reading makefile 'Makefile'...
+Updating makefiles....
+ Considering target file 'Makefile'.
+  Looking for an implicit rule for 'Makefile'.
+   Trying pattern rule '%:: %,v' with stem 'Makefile'.
+   Trying implicit prerequisite 'Makefile,v'.
+   Not found 'Makefile,v'.
+   Trying pattern rule '%:: RCS/%,v' with stem 'Makefile'.
+   Trying implicit prerequisite 'RCS/Makefile,v'.
+   Not found 'RCS/Makefile,v'.
+   Trying pattern rule '%:: RCS/%' with stem 'Makefile'.
+   Trying implicit prerequisite 'RCS/Makefile'.
+   Not found 'RCS/Makefile'.
+   Trying pattern rule '%:: s.%' with stem 'Makefile'.
+   Trying implicit prerequisite 's.Makefile'.
+   Not found 's.Makefile'.
+   Trying pattern rule '%:: SCCS/s.%' with stem 'Makefile'.
+   Trying implicit prerequisite 'SCCS/s.Makefile'.
+   Not found 'SCCS/s.Makefile'.
+   Trying harder.
+  No implicit rule found for 'Makefile'.
+ Finished prerequisites of target file 'Makefile'.
+ No need to remake target 'Makefile'.
+Updating goal targets....
+Considering target file 'build'.
+ File 'build' does not exist.
+Finished prerequisites of target file 'build'.
+Must remake target 'build'.
+Successfully remade target file 'build'.
+make: Nothing to be done for 'build'.
