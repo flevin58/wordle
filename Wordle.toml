@@ -1,0 +1,55 @@
+# Warning: adding values implies modification of the Config structs in config.rs
+################################################################################
+# This is the configuration file of the wordle game by flevin58
+# It is intended to be used at design time, and is embedded in the code
+###############################################################################
+
+[window]
+title = "Wordle 1.2"
+width = 800
+height = 600
+area_color = "#e8e8e8"
+
+[title]
+height = 40
+font_face = "Medium"
+font_size = 30.0
+font_color = "#000000"
+area_color = "#60a665"
+
+[grid]
+num_rows = 6
+num_cols = 5
+box_size = 75
+box_gap = 8
+font_face = "Bold"
+font_size = 50.0
+color_border = "#000000"
+color_emptybox = "#c2c5c6"
+color_noletters = "#777c7e"
+color_wrongpos = "#cdb35d"
+color_rightpos = "#60a665"
+color_answer = "#6495ed"
+
+[status_line]
+height = 80
+area_color = "#00acd7"
+text_color = "#000000"
+font_face = "Thin"
+font_size = 24.0
+
+[messages.welcome]
+title = "Welcome to Wordle!"
+text = "Type your guess and press ENTER"
+[messages.playing]
+title = "Keep typing!"
+text = "Press a key (A-Z) or Backspace"
+[messages.enter]
+title = "Hope you guessed right!"
+text = "Press Enter or Backspace"
+[messages.win]
+title = "You are a winner !!!"
+text = "Enter (play again), Esc (exit)"
+[messages.loose]
+title = "OOOOH ... You loose :("
+text = "Enter (play again), Esc (exit)"

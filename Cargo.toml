@@ -1,0 +1,15 @@
+[package]
+name = "wordle"
+version = "0.1.0"
+edition = "2024"
+authors = ["Fernando Levin <flevin58@gmail.com>"]
+publish = false
+repository = "https://github.com/flevin58/wordle"
+description = "A wordle clone in rust"
+license = "MIT"
+
+[dependencies]
+rand = "0.10.2"
+raylib = "6.0.0"
+serde = { version = "1.0.229", features = ["derive"] }
+toml = "1.1.4"
