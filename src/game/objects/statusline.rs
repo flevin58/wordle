@@ -29,13 +29,6 @@ impl<'a> GameObject for StatusLine<'a> {
             return;
         }
         let cfg = &self.ctx.cfg;
-        d.draw_rectangle(
-            0,
-            cfg.window.height - cfg.status_line.height,
-            cfg.window.width,
-            cfg.status_line.height,
-            Color::from(&cfg.status_line.area_color),
-        );
         let (title, text) = match self.ctx.state {
             GameState::Starting => {
                 (
@@ -54,25 +47,23 @@ impl<'a> GameObject for StatusLine<'a> {
 
         macro_rules! line_pos {
             ($num:expr) => {
-                cfg.window.height - cfg.status_line.height + 10 + 30 * ($num-1)
+                cfg.window.height - cfg.status_line.height as i32 + 10 + 30 * ($num-1)
             };
         }
 
-        //let font_size = self.ctx.cfg.status_line.font_size as i32;
-        //let title_x = 10 + (self.ctx.cfg.window.width - d.measure_text(title, font_size)) / 2;
         d.draw_text(
             title,
             center!(title),
             line_pos!(1),
             self.ctx.cfg.status_line.font_size as i32,
-            &self.ctx.cfg.status_line.text_color
+            &self.ctx.cfg.status_line.font_color
         );
         d.draw_text(
             text,
             center!(text),
             line_pos!(2),
             self.ctx.cfg.status_line.font_size as i32,
-            &self.ctx.cfg.status_line.text_color
+            &self.ctx.cfg.status_line.font_color
         );
     }
 }

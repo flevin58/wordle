@@ -38,11 +38,10 @@ pub struct Grid {
 
 #[derive(Debug, Deserialize)]
 pub struct StatusLine {
-    pub height: i32,
-    pub area_color: HexColor,
-    pub text_color: HexColor,
+    pub height: f32,
     pub font_face: String,
     pub font_size: f32,
+    pub font_color: HexColor,
 }
 
 #[derive(Debug, Deserialize)]
