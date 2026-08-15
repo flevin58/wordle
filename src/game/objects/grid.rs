@@ -29,7 +29,7 @@ impl<'a> Grid<'a> {
 }
 
 impl<'a> GameObject for Grid<'a> {
-    fn update(&mut self, d: &mut RaylibDrawHandle) {
+    fn update(&mut self, _d: &mut RaylibDrawHandle) {
     }
 
     fn draw(&mut self, d: &mut RaylibDrawHandle) {

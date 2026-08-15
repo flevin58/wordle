@@ -1,5 +1,5 @@
-use raylib::color::Color;
 use raylib::drawing::RaylibDraw;
+use raylib::prelude::RaylibDrawHandle;
 use crate::game::{GameObject, GameContext, GameState};
 
 //
@@ -8,62 +8,54 @@ use crate::game::{GameObject, GameContext, GameState};
 //
 pub struct StatusLine<'a> {
     pub ctx: &'a GameContext<'a>,
-    pub hidden: bool,
+    pub title: &'a str,
+    pub text: &'a str,
 }
 
 impl<'a> StatusLine<'a> {
     pub fn new(ctx: &'a GameContext) -> Self {
         Self {
             ctx: ctx,
-            hidden: false,
+            title: "",
+            text: "",
         }
     }
 }
 
 impl<'a> GameObject for StatusLine<'a> {
-    fn update(&mut self, _d: &mut raylib::prelude::RaylibDrawHandle) {
-    }
-
-    fn draw(&mut self, d: &mut raylib::prelude::RaylibDrawHandle) {
-        if self.hidden {
-            return;
-        }
+    fn update(&mut self, _d: &mut RaylibDrawHandle) {
         let cfg = &self.ctx.cfg;
-        let (title, text) = match self.ctx.state {
+        (self.title, self.text) = match self.ctx.state {
             GameState::Starting => {
                 (
-                    &self.ctx.cfg.messages.starting.title,
-                    &self.ctx.cfg.messages.starting.text
+                    &cfg.messages.starting.title,
+                    &cfg.messages.starting.text
                 )
             }
-            _ => (&String::from(""), &String::from(""))
+            _ => todo!("Implement the other GameState branches")
         };
-
-        macro_rules! center {
-            ($text:ident) => {
-                10 + (self.ctx.cfg.window.width - d.measure_text($text, self.ctx.cfg.status_line.font_size as i32)) / 2
+    }
+    
+    fn draw(&mut self, d: &mut RaylibDrawHandle) {
+        
+        macro_rules! draw_centered {
+            ($line:expr) => {
+                {
+                    let msg = if $line == 1 { self.title } else { self.text };
+                    let x_pos = 10 + (self.ctx.cfg.window.width - d.measure_text(msg, self.ctx.cfg.status_line.font_size as i32)) / 2;
+                    let y_pos = self.ctx.cfg.window.height - self.ctx.cfg.status_line.height as i32 + 10 + 30 * ($line-1);
+                    d.draw_text(
+                        msg,
+                        x_pos,
+                        y_pos,
+                        self.ctx.cfg.status_line.font_size as i32,
+                        &self.ctx.cfg.status_line.font_color
+                    );
+                }
             };
         }
 
-        macro_rules! line_pos {
-            ($num:expr) => {
-                cfg.window.height - cfg.status_line.height as i32 + 10 + 30 * ($num-1)
-            };
-        }
-
-        d.draw_text(
-            title,
-            center!(title),
-            line_pos!(1),
-            self.ctx.cfg.status_line.font_size as i32,
-            &self.ctx.cfg.status_line.font_color
-        );
-        d.draw_text(
-            text,
-            center!(text),
-            line_pos!(2),
-            self.ctx.cfg.status_line.font_size as i32,
-            &self.ctx.cfg.status_line.font_color
-        );
+        draw_centered!(1);
+        draw_centered!(2);
     }
 }

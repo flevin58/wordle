@@ -8,7 +8,7 @@ use raylib::prelude::*;
 #[derive(PartialEq)]
 enum GameState {
     Starting,
-    Running,
+//    Running,
     Finished,
 }
 
