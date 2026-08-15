@@ -12,21 +12,22 @@ pub struct Window {
 
 #[derive(Debug, Deserialize)]
 pub struct Title {
-    pub height: i32,
+    pub y_pos: f32,
     pub font_face: String,
     pub font_size: f32,
     pub font_color: HexColor,
-    pub area_color: HexColor,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct Grid {
+    pub y_pos: f32,
     pub num_rows: i32,
     pub num_cols: i32,
     pub box_size: i32,
     pub box_gap: i32,
     pub font_face: String,
     pub font_size: f32,
+    pub color_area: HexColor,
     pub color_border: HexColor,
     pub color_emptybox: HexColor,
     pub color_noletters: HexColor,
@@ -45,11 +46,23 @@ pub struct StatusLine {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct Message {
+    pub title: String,
+    pub text: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct Messages {
+    pub starting: Message,
+}
+
+#[derive(Debug, Deserialize)]
 pub struct Config {
     pub window: Window,
     pub title: Title,
     pub grid: Grid,
     pub status_line: StatusLine,
+    pub messages: Messages,
 }
 
 const WORDLE_TOML: &str = include_str!("../../Wordle.toml"); 

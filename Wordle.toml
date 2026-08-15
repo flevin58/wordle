@@ -11,19 +11,20 @@ height = 600
 area_color = "#e8e8e8"
 
 [title]
-height = 40
+y_pos = 10.0
 font_face = "Medium"
 font_size = 30.0
 font_color = "#000000"
-area_color = "#60a665"
 
 [grid]
+y_pos = 40.0
 num_rows = 6
 num_cols = 5
 box_size = 75
 box_gap = 8
 font_face = "Bold"
 font_size = 50.0
+color_area = "#345622"
 color_border = "#000000"
 color_emptybox = "#c2c5c6"
 color_noletters = "#777c7e"
@@ -38,7 +39,7 @@ text_color = "#000000"
 font_face = "Thin"
 font_size = 24.0
 
-[messages.welcome]
+[messages.starting]
 title = "Welcome to Wordle!"
 text = "Type your guess and press ENTER"
 [messages.playing]

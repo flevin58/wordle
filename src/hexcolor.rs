@@ -12,7 +12,7 @@ impl From<Color> for HexColor {
 
 impl From<String> for HexColor {
     fn from(s: String) -> Self {
-        Self(format!("{s}"))
+        Self(s)
     }
 }
 

@@ -1,16 +1,20 @@
-#![allow(unused)]
-
 mod config;
 mod objects;
 
 use config::Config;
-use objects::Grid;
+use objects::{Grid, StatusLine, Title};
 use raylib::prelude::*;
 
+#[derive(PartialEq)]
 enum GameState {
-    Idle,
+    Starting,
     Running,
     Finished,
+}
+
+pub struct GameContext<'a> {
+    cfg: &'a Config,
+    state: GameState,
 }
 
 trait GameObject {
@@ -30,11 +34,16 @@ pub fn run() {
 
     rl.set_target_fps(60);
 
-    let state = GameState::Idle;
+    let context = GameContext {
+        cfg: &cfg,
+        state: GameState::Starting,
+    };
 
     // Register all game objects that will be updated and drawn
     let mut objects: Vec<Box<dyn GameObject>> = Vec::new();
-    objects.push(Box::new(Grid::new(&cfg)));
+    objects.push(Box::new(Title::new(&context)));
+    objects.push(Box::new(Grid::new(&context)));
+    objects.push(Box::new(StatusLine::new(&context)));
 
     // Game loop
     while !rl.window_should_close() {
@@ -46,7 +55,7 @@ pub fn run() {
             obj.update(&mut d);
         }
 
-        if let GameState::Finished = state {
+        if context.state == GameState::Finished {
             break;
         }
 
