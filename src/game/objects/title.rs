@@ -1,37 +1,30 @@
 use raylib::drawing::RaylibDraw;
-use raylib::color::Color;
-use crate::game::GameContext;
+use raylib::prelude::RaylibDrawHandle;
 
 use crate::game::GameObject;
+use crate::get_read_context;
 
-pub struct Title<'a> {
-    ctx: &'a GameContext<'a>,
-    title: String,
-}
+pub struct Title(String);
 
-impl<'a> Title<'a> {
-    pub fn new(ctx: &'a GameContext) -> Self {
-        Self {
-            ctx: ctx,
-            title: "Wordle".to_string(),
-        }
+impl Title {
+    pub fn new(s: &str) -> Self {
+        Self(s.to_string())
     }
 }
 
-impl<'a> GameObject for Title<'a> {
-    fn update(&mut self, _d: &mut raylib::prelude::RaylibDrawHandle) {     
-    }
+impl GameObject for Title {
+    fn update(&mut self, _d: &mut RaylibDrawHandle) {}
 
-    fn draw(&mut self, d: &mut raylib::prelude::RaylibDrawHandle) {
-        let cfg = &self.ctx.cfg;
-        let pos_x = (d.get_screen_width() - d.measure_text(&self.title, cfg.title.font_size as i32)) /2;
+    fn draw(&mut self, d: &mut RaylibDrawHandle) {
+        let ctx = get_read_context!();
+        let cfg = &ctx.cfg.title;
+        let pos_x = (d.get_screen_width() - d.measure_text(&self.0, cfg.font_size as i32)) /2;
         d.draw_text(
-                &self.title,
+                &self.0,
                 pos_x,
-                cfg.title.y_pos as i32,
-                cfg.title.font_size as i32,
-                Color::from(&cfg.title.font_color),
+                cfg.y_pos as i32,
+                cfg.font_size as i32,
+                &cfg.font_color,
         );
     }
-
 }

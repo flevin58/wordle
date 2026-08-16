@@ -2,43 +2,71 @@ pub mod cell;
 //
 // This game object implements the wordle 5 x 6 grid
 //
-use crate::game::{GameContext, GameObject};
+use crate::game::GameObject;
+use crate::game::objects::grid::cell::Cell;
+use crate::get_read_context;
+use raylib::ffi::KeyboardKey::{KEY_LEFT, KEY_RIGHT};
 use raylib::ffi::Rectangle;
 use raylib::prelude::*;
 
-pub struct Grid <'a> {
-    ctx: &'a GameContext<'a>,
-    data: Vec<u8>,
-    cursor: Vector2,
+pub struct Grid {
+    data: Vec<Vec<Cell>>,
+    cursor_x: usize,
+    cursor_y: usize,
     rect: Rectangle,
 }
 
-impl<'a> Grid<'a> {
-    pub fn new(ctx: &'a GameContext) -> Self {
-        let cfg = &ctx.cfg.grid;
-        let grid_width = (cfg.num_cols * cfg.box_size + (cfg.num_cols - 1) * cfg.box_gap) as f32;
-        let grid_height = (cfg.num_rows * cfg.box_size + (cfg.num_rows - 1) * cfg.box_gap) as f32;
+impl Grid {
+    pub fn new() -> Self {
+        let ctx = get_read_context!();
+        let grid = &ctx.cfg.grid;
+        let grid_width = (grid.num_cols * (grid.box_size + grid.box_gap) - grid.box_gap) as f32;
+        let grid_height = (grid.num_rows * (grid.box_size + grid.box_gap) - grid.box_gap) as f32;
         let grid_x = ( ctx.cfg.window.width as f32 - grid_width) / 2.;
-        Self {
-            ctx: ctx,
-            data: Vec::with_capacity(cfg.num_rows as usize * cfg.num_rows as usize),
-            cursor: Vector2 { x: 0., y: 0. },
-            rect: Rectangle{x: grid_x, y: cfg.y_pos, width: grid_width, height: grid_height},
+        let mut new_grid = Self {
+            data: vec![vec![Cell::new(); 5]; 6],
+            cursor_x: 0,
+            cursor_y: 0,
+            rect: Rectangle{x: grid_x, y: grid.y_pos, width: grid_width, height: grid_height},
+        };
+        for row in 0..ctx.cfg.grid.num_rows as usize {
+            for col in 0..ctx.cfg.grid.num_cols as usize {
+                new_grid.data[row][col].set_coords(row, col);
+            }
         }
+        new_grid
     }
 }
 
-impl<'a> GameObject for Grid<'a> {
-    fn update(&mut self, _d: &mut RaylibDrawHandle) {
+impl GameObject for Grid {
+    fn update(&mut self, d: &mut RaylibDrawHandle) {
+        let ctx = get_read_context!();
+        self.data[self.cursor_y][self.cursor_x].selected = false;
+        if d.is_key_pressed(KEY_LEFT) {
+            if self.cursor_x > 0 {
+                self.cursor_x -= 1;
+            }
+        } else if d.is_key_pressed(KEY_RIGHT) {
+            if self.cursor_x < ctx.cfg.grid.num_cols {
+                self.cursor_x += 1;
+            }
+        }
+        self.data[self.cursor_y][self.cursor_x].selected = true;
     }
 
     fn draw(&mut self, d: &mut RaylibDrawHandle) {
+        let ctx = get_read_context!();
         d.draw_rectangle(
             self.rect.x as i32,
             self.rect.y as i32,
             self.rect.width as i32,
             self.rect.height as i32,
-            Color::from(&self.ctx.cfg.grid.color_area)
+            &ctx.cfg.grid.color_area
         );
+        for row in 0..ctx.cfg.grid.num_rows as usize {
+            for col in 0..ctx.cfg.grid.num_cols as usize {
+                self.data[row][col].draw(d);
+            }
+        }
     }
 }

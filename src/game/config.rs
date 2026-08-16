@@ -2,7 +2,7 @@ use toml;
 use serde::Deserialize;
 use crate::hexcolor::HexColor;
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Window {
     pub title: String,
     pub width: i32,
@@ -10,7 +10,7 @@ pub struct Window {
     pub area_color: HexColor,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Title {
     pub y_pos: f32,
     pub font_face: String,
@@ -18,13 +18,13 @@ pub struct Title {
     pub font_color: HexColor,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Grid {
     pub y_pos: f32,
-    pub num_rows: i32,
-    pub num_cols: i32,
-    pub box_size: i32,
-    pub box_gap: i32,
+    pub num_rows: usize,
+    pub num_cols: usize,
+    pub box_size: usize,
+    pub box_gap: usize,
     pub font_face: String,
     pub font_size: f32,
     pub color_area: HexColor,
@@ -36,7 +36,7 @@ pub struct Grid {
     pub color_answer: HexColor,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct StatusLine {
     pub height: f32,
     pub font_face: String,
@@ -44,18 +44,19 @@ pub struct StatusLine {
     pub font_color: HexColor,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Message {
     pub title: String,
     pub text: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Messages {
     pub starting: Message,
+    pub playing: Message,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Clone, Debug, Deserialize)]
 pub struct Config {
     pub window: Window,
     pub title: Title,
